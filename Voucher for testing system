@@ -1,0 +1,41 @@
+class Voucher:
+    def _init_(self, code, value):
+        self.code = code
+        self.value = value
+        self.is_redeemed = False
+
+    def redeem(self):
+        if not self.is_redeemed:
+            self.is_redeemed = True
+            print(f"Voucher with code {self.code} has been redeemed.")
+            return self.value
+        else:
+            print("This voucher has already been redeemed.")
+            return 0
+
+class TestingSystem:
+    def _init_(self):
+        self.vouchers = []
+
+    def add_voucher(self, voucher):
+        self.vouchers.append(voucher)
+
+    def redeem_voucher(self, code):
+        for voucher in self.vouchers:
+            if voucher.code == code:
+                return voucher.redeem()
+        print("Voucher not found.")
+        return 0
+
+# Example usage:
+testing_system = TestingSystem()
+
+voucher1 = Voucher("VOUCHER123", 50)
+voucher2 = Voucher("VOUCHER456", 100)
+
+testing_system.add_voucher(voucher1)
+testing_system.add_voucher(voucher2)
+
+print(testing_system.redeem_voucher("VOUCHER123"))  # Output: Voucher with code VOUCHER123 has been redeemed. 50
+print(testing_system.redeem_voucher("VOUCHER123"))  # Output: This voucher has already been redeemed. 0
+print(testing_system.redeem_voucher("INVALID"))     # Output: Voucher not found. 0
